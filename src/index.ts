@@ -366,12 +366,16 @@ function FlatpickrInstance(
    */
   function onYearInput(event: KeyboardEvent & IncrementEvent) {
     const eventTarget = getEventTarget(event) as HTMLInputElement;
-    const year = parseInt(eventTarget.value) + (event.delta || 0);
-
+    //const year = parseInt(eventTarget.value) + (event.delta || 0);
+    let year = parseInt(eventTarget.value) + (event.delta || 0);
     if (
       year / 1000 > 1 ||
       (event.key === "Enter" && !/[^\d]/.test(year.toString()))
     ) {
+      if (self.config.useLocaleYear) {
+        const adj = self.l10n.localeYearAdjustment || 0;
+        year = year - adj;
+      }
       changeYear(year);
     }
   }
@@ -517,10 +521,10 @@ function FlatpickrInstance(
         self.currentYear = jumpTo.getFullYear();
         self.currentMonth = jumpTo.getMonth();
       }
-    } catch (e) {
+    } catch (ex:any) {
       /* istanbul ignore next */
-      e.message = "Invalid date supplied: " + jumpTo;
-      self.config.errorHandler(e);
+      ex.message = "Invalid date supplied: " + jumpTo;
+      self.config.errorHandler(ex);
     }
 
     if (triggerChange && self.currentYear !== oldYear) {
@@ -1226,9 +1230,9 @@ function FlatpickrInstance(
         "flatpickr-am-pm",
         self.l10n.amPM[
           int(
-            (self.latestSelectedDateObj
-              ? self.hourElement.value
-              : self.config.defaultHour) > 11
+            (!!self.latestSelectedDateObj
+              ? +self.hourElement.value
+              : +self.config.defaultHour) > 11
           )
         ]
       );
@@ -1456,6 +1460,7 @@ function FlatpickrInstance(
     if (self.isOpen && !self.config.inline) {
       const eventTarget = getEventTarget(e);
       const isCalendarElement = isCalendarElem(eventTarget as HTMLElement);
+      const valueChanged = self._input.value.trimEnd() !== getDateStr();
       const isInput =
         eventTarget === self.input ||
         eventTarget === self.altInput ||
@@ -1480,7 +1485,8 @@ function FlatpickrInstance(
         if (self.config.allowInput) {
           self.setDate(
             self._input.value,
-            false,
+            //false,
+            valueChanged,
             self.config.altInput
               ? self.config.altFormat
               : self.config.dateFormat
@@ -2307,7 +2313,7 @@ function FlatpickrInstance(
 
     if (
       window.navigator.userAgent.indexOf("MSIE") !== -1 ||
-      navigator.msMaxTouchPoints !== undefined
+      navigator.maxTouchPoints !== undefined
     ) {
       // hack - bugs in the way IE handles focus keeps the calendar open
       setTimeout(self.close, 0);
@@ -2794,7 +2800,14 @@ function FlatpickrInstance(
         self.monthsDropdownContainer.value = d.getMonth().toString();
       }
 
-      yearElement.value = d.getFullYear().toString();
+      //yearElement.value = d.getFullYear().toString();
+
+      if (self.config.useLocaleYear) {
+        const adj = self.l10n.localeYearAdjustment || 0;
+        yearElement.value = (d.getFullYear() + adj).toString();
+      } else {
+        yearElement.value = d.getFullYear().toString();
+      }
     });
 
     self._hidePrevMonthArrow =

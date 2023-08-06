@@ -8,7 +8,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
-    "lib": ["es2015", "dom", "es2017.object", "esnext.asynciterable"],
+    "lib": ["es2015", "dom", "es2017.object", "esnext.asynciterable", "es2019.string"],
     "baseUrl": "./"
   }
 }
