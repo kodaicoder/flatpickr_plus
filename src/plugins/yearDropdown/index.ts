@@ -76,12 +76,12 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
           fp.currentYear = year;
         }
         fp.changeYear(+year);
-        fp.redraw();
+        // fp.redraw();
       });
 
       fp._bind(self.yearSelect, "reset", () => {
         self.yearSelect!.value = fp.currentYearElement.value;
-        fp.redraw();
+        // fp.redraw();
       });
     };
 
