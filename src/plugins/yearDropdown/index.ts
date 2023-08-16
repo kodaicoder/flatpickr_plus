@@ -3,14 +3,10 @@ import { Instance } from "../../types/instance";
 
 export interface Config {
   selectYear: number;
-  yearStart: number;
-  yearEnd: number;
 }
 
 const defaultConfig: Config = {
   selectYear: new Date().getFullYear(),
-  yearStart: 1900,
-  yearEnd: new Date().getFullYear(),
 };
 
 function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
@@ -24,33 +20,28 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
     };
 
     const createSelectElement = function (initialYear: number) {
-      const start = config.yearStart;
-      const end = config.yearEnd;
+      let start = fp.config.minDate
+        ? fp.config.minDate.getFullYear()
+        : new Date().getFullYear() - 150; // default start year is the current year - 150
+
+      let end = fp.config.maxDate
+        ? fp.config.maxDate.getFullYear()
+        : new Date().getFullYear(); // default end year is the current year
+
       self.yearSelect = fp._createElement<HTMLSelectElement>(
         "select",
         "flatpickr-monthDropdown-months"
       );
 
       self.yearSelect.setAttribute("aria-label", "year selection");
-      let minYearOpt;
-      let maxYearOpt;
-      if (fp.config._minDate && fp.config._maxDate) {
-        minYearOpt = new Date(fp.config._minDate).getFullYear();
-        maxYearOpt = new Date(fp.config._maxDate).getFullYear();
-      } else {
-        minYearOpt = start;
-        maxYearOpt = end;
-        fp.config._minDate = new Date(start, 0, 1);
-        fp.config._maxDate = new Date(end, 11, 31);
-      }
 
       if (fp.config.useLocaleYear) {
-        minYearOpt += fp.l10n.localeYearAdjustment;
-        maxYearOpt += fp.l10n.localeYearAdjustment;
+        start += fp.l10n.localeYearAdjustment;
+        end += fp.l10n.localeYearAdjustment;
         initialYear += fp.l10n.localeYearAdjustment;
       }
 
-      for (let i = maxYearOpt; i >= minYearOpt; i--) {
+      for (let i = end; i >= start; i--) {
         const year = fp._createElement<HTMLOptionElement>(
           "option",
           "flatpickr-monthDropdown-month"
