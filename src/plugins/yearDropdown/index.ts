@@ -18,15 +18,20 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
       yearSelectContainer: null as null | HTMLDivElement,
       yearSelect: null as null | HTMLSelectElement,
     };
+    const setDefaultMinMaxDate = () => {
+      //set min date to last day of current year - 150
+      if (!fp.config.minDate) {
+        fp.config.minDate = new Date(new Date().getFullYear() - 150, 0, 1);
+      }
+      //set max date to last day of current year
+      if (!fp.config.maxDate) {
+        fp.config.maxDate = new Date(new Date().getFullYear(), 11, 31);
+      }
+    };
 
     const createSelectElement = function (initialYear: number) {
-      let start = fp.config.minDate
-        ? fp.config.minDate.getFullYear()
-        : new Date().getFullYear() - 150; // default start year is the current year - 150
-
-      let end = fp.config.maxDate
-        ? fp.config.maxDate.getFullYear()
-        : new Date().getFullYear(); // default end year is the current year
+      let start = fp.config.minDate!.getFullYear();
+      let end = fp.config.maxDate!.getFullYear();
 
       self.yearSelect = fp._createElement<HTMLSelectElement>(
         "select",
@@ -101,10 +106,12 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
 
     return {
       onReady: [
+        setDefaultMinMaxDate,
         hideOldYearInput,
         buildSelect,
         () => {
           const flatpickrYearElement = fp.currentYearElement;
+
           flatpickrYearElement.parentElement!.parentElement!.appendChild(
             fp.yearSelectContainer!
           );
