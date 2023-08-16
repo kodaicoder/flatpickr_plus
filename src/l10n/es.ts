@@ -61,6 +61,7 @@ export const Spanish: CustomLocale = {
   firstDayOfWeek: 1,
   rangeSeparator: " a ",
   time_24hr: true,
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.es = Spanish;

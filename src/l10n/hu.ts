@@ -55,7 +55,7 @@ export const Hungarian: CustomLocale = {
       "December",
     ],
   },
-
+  localeYearAdjustment: 0,
   ordinal: function () {
     return ".";
   },

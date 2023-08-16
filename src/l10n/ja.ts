@@ -60,6 +60,7 @@ export const Japanese: CustomLocale = {
   yearAriaLabel: "年",
   hourAriaLabel: "時間",
   minuteAriaLabel: "分",
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.ja = Japanese;

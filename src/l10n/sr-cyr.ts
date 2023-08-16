@@ -53,7 +53,7 @@ export const SerbianCyrillic: CustomLocale = {
       "Децембар",
     ],
   },
-
+  localeYearAdjustment: 0,
   firstDayOfWeek: 1,
   weekAbbreviation: "Нед.",
   rangeSeparator: " до ",

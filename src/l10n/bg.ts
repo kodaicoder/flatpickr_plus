@@ -55,6 +55,7 @@ export const Bulgarian: CustomLocale = {
   },
   time_24hr: true,
   firstDayOfWeek: 1,
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.bg = Bulgarian;

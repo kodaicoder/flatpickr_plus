@@ -51,6 +51,7 @@ export const Indonesian: CustomLocale = {
   ordinal: () => {
     return "";
   },
+  localeYearAdjustment: 0,
   time_24hr: true,
   rangeSeparator: " - ",
 };

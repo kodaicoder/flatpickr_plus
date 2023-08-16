@@ -47,7 +47,7 @@ export const Malaysian: CustomLocale = {
   },
 
   firstDayOfWeek: 1,
-
+  localeYearAdjustment: 0,
   ordinal: () => {
     return "";
   },

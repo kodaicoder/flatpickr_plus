@@ -310,10 +310,12 @@
   position absolute
   width 75%
   left 12.5%
-  padding (0.22*$monthNavHeight) 0 0 0
+  padding (0.2*$monthNavHeight) 0 0 0
   line-height 1
   height $monthNavHeight
-  display inline-block
+  display flex
+  gap 15px
+  justify-content center
   text-align center
   transform translate3d(0px, 0px, 0px)
 
@@ -328,11 +330,13 @@
     &:hover
       background: alpha($invertedBg, 0.05)
 
-
   .numInputWrapper
-    width 6ch
+    width auto
     width unquote("7ch\0")
     display inline-block
+
+    &.flatpickr-disabled
+      display: none !important;
 
     span.arrowUp:after
       border-bottom-color $monthForeground

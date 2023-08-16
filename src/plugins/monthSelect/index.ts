@@ -102,6 +102,17 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       )
         fp.nextMonthNav.classList.add("flatpickr-disabled");
       else fp.nextMonthNav.classList.remove("flatpickr-disabled");
+
+      //set year select to selected year
+      if (!!fp.yearSelect) {
+        let year;
+        if (fp.config.useLocaleYear) {
+          year = fp.currentYear + fp.l10n.localeYearAdjustment;
+        } else {
+          year = fp.currentYear;
+        }
+        fp.yearSelect.value = String(year);
+      }
     }
 
     function bindEvents() {
@@ -134,6 +145,14 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
             );
         }
       );
+
+      //bind with YearDropdown
+      if (!!fp.yearSelect) {
+        fp._bind(fp.yearSelect, "change", () => {
+          selectYear();
+          buildMonths();
+        });
+      }
     }
 
     function setCurrentlySelected() {
@@ -171,8 +190,14 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         }
         fp.currentYear = selectedDate.getFullYear();
       }
-
-      fp.currentYearElement.value = String(fp.currentYear);
+      //? config to support a locale year adjustment
+      if (fp.config.useLocaleYear) {
+        fp.currentYearElement.value = String(
+          fp.currentYear + fp.l10n.localeYearAdjustment
+        );
+      } else {
+        fp.currentYearElement.value = String(fp.currentYear);
+      }
 
       if (fp.rContainer) {
         const months: NodeListOf<ElementDate> = fp.rContainer.querySelectorAll(
@@ -293,6 +318,9 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       if (fp.config?.mode === "range" && fp.selectedDates.length === 1)
         fp.clear(false);
 
+      if (fp.config?.mode === "single" && fp.selectedDates.length === 0)
+        fp.clear(false);
+
       if (!fp.selectedDates.length) buildMonths();
     }
 
@@ -337,6 +365,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         bindEvents,
         setCurrentlySelected,
         () => {
+          fp.config.onOpen.push(closeHook);
           fp.config.onClose.push(closeHook);
           fp.loadedPlugins.push("monthSelect");
         },

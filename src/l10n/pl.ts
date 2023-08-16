@@ -59,7 +59,7 @@ export const Polish: CustomLocale = {
   toggleTitle: "Kliknij, aby przełączyć",
   firstDayOfWeek: 1,
   time_24hr: true,
-
+  localeYearAdjustment: 0,
   ordinal: () => {
     return ".";
   },

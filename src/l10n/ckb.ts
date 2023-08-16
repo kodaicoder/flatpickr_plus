@@ -62,6 +62,7 @@ export const Kurdish: CustomLocale = {
     ],
   },
   firstDayOfWeek: 6,
+  localeYearAdjustment: 0,
   ordinal: () => {
     return "";
   },

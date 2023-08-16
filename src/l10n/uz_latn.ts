@@ -53,6 +53,7 @@ export const UzbekLatin: CustomLocale = {
     ],
   },
   firstDayOfWeek: 1,
+  localeYearAdjustment: 0,
   ordinal: function () {
     return "";
   },

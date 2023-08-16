@@ -63,6 +63,7 @@ export const Azerbaijan: CustomLocale = {
   toggleTitle: "Aç / Bağla",
   amPM: ["GƏ", "GS"],
   time_24hr: true,
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.az = Azerbaijan;

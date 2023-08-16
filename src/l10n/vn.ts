@@ -55,6 +55,7 @@ export const Vietnamese: CustomLocale = {
   },
 
   firstDayOfWeek: 1,
+  localeYearAdjustment: 0,
   rangeSeparator: " đến ",
 };
 

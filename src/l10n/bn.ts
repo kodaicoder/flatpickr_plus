@@ -53,6 +53,7 @@ export const Bangla: CustomLocale = {
       "ডিসেম্বর",
     ],
   },
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.bn = Bangla;

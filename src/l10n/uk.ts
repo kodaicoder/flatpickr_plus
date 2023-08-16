@@ -56,6 +56,7 @@ export const Ukrainian: CustomLocale = {
     ],
   },
   time_24hr: true,
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.uk = Ukrainian;

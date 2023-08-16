@@ -61,6 +61,7 @@ export const Albanian: CustomLocale = {
   hourAriaLabel: "Ora",
   minuteAriaLabel: "Minuta",
   time_24hr: true,
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.sq = Albanian;

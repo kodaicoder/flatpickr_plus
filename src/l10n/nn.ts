@@ -60,7 +60,7 @@ export const NorwegianNynorsk: CustomLocale = {
   scrollTitle: "Scroll for å endre",
   toggleTitle: "Klikk for å veksle",
   time_24hr: true,
-
+  localeYearAdjustment: 0,
   ordinal: () => {
     return ".";
   },

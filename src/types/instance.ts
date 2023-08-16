@@ -49,6 +49,9 @@ export interface Elements {
   secondElement?: HTMLInputElement;
   amPM?: HTMLSpanElement;
 
+  yearSelectContainer: null | HTMLDivElement;
+  yearSelect: null | HTMLSelectElement;
+
   pluginElements: Node[];
 }
 

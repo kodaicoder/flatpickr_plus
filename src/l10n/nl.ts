@@ -53,7 +53,7 @@ export const Dutch: CustomLocale = {
       "december",
     ],
   },
-
+  localeYearAdjustment: 0,
   firstDayOfWeek: 1,
   weekAbbreviation: "wk",
   rangeSeparator: " t/m ",

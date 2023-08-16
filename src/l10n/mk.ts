@@ -53,7 +53,7 @@ export const Macedonian: CustomLocale = {
       "Декември",
     ],
   },
-
+  localeYearAdjustment: 0,
   firstDayOfWeek: 1,
   weekAbbreviation: "Нед.",
   rangeSeparator: " до ",

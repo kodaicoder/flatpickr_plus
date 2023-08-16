@@ -53,6 +53,7 @@ export const Czech: CustomLocale = {
     ],
   },
   firstDayOfWeek: 1,
+  localeYearAdjustment: 0,
   ordinal: function () {
     return ".";
   },

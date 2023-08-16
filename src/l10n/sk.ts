@@ -60,6 +60,7 @@ export const Slovak: CustomLocale = {
   ordinal: function () {
     return ".";
   },
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.sk = Slovak;

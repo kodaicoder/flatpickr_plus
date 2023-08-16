@@ -60,6 +60,7 @@ export const Slovenian: CustomLocale = {
   ordinal: function () {
     return ".";
   },
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.sl = Slovenian;

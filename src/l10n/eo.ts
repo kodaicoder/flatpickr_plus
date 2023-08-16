@@ -65,6 +65,7 @@ export const Esperanto: CustomLocale = {
     return "-a";
   },
   time_24hr: true,
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.eo = Esperanto;

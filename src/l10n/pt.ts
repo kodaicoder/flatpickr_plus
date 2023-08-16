@@ -53,7 +53,7 @@ export const Portuguese: CustomLocale = {
       "Dezembro",
     ],
   },
-
+  localeYearAdjustment: 0,
   rangeSeparator: " até ",
   time_24hr: true,
 };

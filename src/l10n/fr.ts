@@ -66,6 +66,7 @@ export const French: CustomLocale = {
   scrollTitle: "Défiler pour augmenter la valeur",
   toggleTitle: "Cliquer pour basculer",
   time_24hr: true,
+  localeYearAdjustment: 0,
 };
 
 fp.l10ns.fr = French;
