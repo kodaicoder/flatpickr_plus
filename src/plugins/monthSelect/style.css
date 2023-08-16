@@ -25,13 +25,13 @@
 }
 
 .flatpickr-monthSelect-month.flatpickr-disabled {
-	color: #eee;
+  color: #eee;
 }
 
 .flatpickr-monthSelect-month.flatpickr-disabled:hover,
 .flatpickr-monthSelect-month.flatpickr-disabled:focus {
-	cursor: not-allowed;
-	background: none !important;
+  cursor: not-allowed;
+  background: none !important;
 }
 
 .flatpickr-monthSelect-theme-dark {
@@ -50,6 +50,11 @@
 
 .flatpickr-monthSelect-theme-dark .flatpickr-monthSelect-month {
   color: rgba(255, 255, 255, 0.95);
+}
+
+.flatpickr-monthSelect-theme-dark
+  .flatpickr-monthSelect-month.flatpickr-disabled {
+  color: rgba(255, 255, 255, 0.15);
 }
 
 .flatpickr-monthSelect-month.today {

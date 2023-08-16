@@ -50,7 +50,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
       self.monthsContainer = fp._createElement<HTMLDivElement>(
         "div",
-        "flatpickr-monthSelect-months"
+        "flatpickr-days"
       );
 
       self.monthsContainer.tabIndex = -1;
@@ -73,7 +73,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
       for (let i = 0; i < 12; i++) {
         const month = fp.createDay(
-          "flatpickr-monthSelect-month",
+          "flatpickr-day",
           new Date(fp.currentYear, i),
           0,
           i
@@ -139,10 +139,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         "mouseover",
         (e: MouseEvent) => {
           if (fp.config.mode === "range")
-            fp.onMouseOver(
-              getEventTarget(e) as DayElement,
-              "flatpickr-monthSelect-month"
-            );
+            fp.onMouseOver(getEventTarget(e) as DayElement, "flatpickr-day");
         }
       );
 
@@ -160,7 +157,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       if (!fp.selectedDates.length) return;
 
       const currentlySelected = fp.rContainer.querySelectorAll(
-        ".flatpickr-monthSelect-month.selected"
+        ".flatpickr-day.selected"
       );
 
       for (let index = 0; index < currentlySelected.length; index++) {
@@ -169,7 +166,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
       const targetMonth = fp.selectedDates[0].getMonth();
       const month = fp.rContainer.querySelector(
-        `.flatpickr-monthSelect-month:nth-child(${targetMonth + 1})`
+        `.flatpickr-day:nth-child(${targetMonth + 1})`
       );
 
       if (month) {
@@ -201,7 +198,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
       if (fp.rContainer) {
         const months: NodeListOf<ElementDate> = fp.rContainer.querySelectorAll(
-          ".flatpickr-monthSelect-month"
+          ".flatpickr-day"
         );
         months.forEach((month) => {
           month.dateObj.setFullYear(fp.currentYear);
@@ -287,7 +284,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       if (!fp.rContainer || !self.monthsContainer) return;
 
       const currentlySelected = fp.rContainer.querySelector(
-        ".flatpickr-monthSelect-month.selected"
+        ".flatpickr-day.selected"
       ) as HTMLElement;
 
       let index = Array.prototype.indexOf.call(
@@ -342,9 +339,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
     function destroyPluginInstance() {
       if (self.monthsContainer !== null) {
-        const months = self.monthsContainer.querySelectorAll(
-          ".flatpickr-monthSelect-month"
-        );
+        const months = self.monthsContainer.querySelectorAll(".flatpickr-day");
 
         for (let index = 0; index < months.length; index++) {
           months[index].removeEventListener("click", selectMonth);
