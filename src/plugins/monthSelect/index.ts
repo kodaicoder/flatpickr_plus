@@ -172,7 +172,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       );
 
       if (month) {
-        if (month.dateObj.getFullYear() === +fp.yearSelect!.value) {
+        if (month.dateObj === fp.selectedDates[0]) {
           month.classList.add("selected");
         }
       }
