@@ -237,7 +237,11 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
     }
 
     function setMonth(date: Date) {
-      const selectedDate = new Date(fp.currentYear, date.getMonth(), 2);
+      const selectedDate = new Date(
+        fp.currentYear,
+        date.getMonth(),
+        date.getDate()
+      );
       let selectedDates: Date[] = [];
 
       switch (fp.config.mode) {
