@@ -1,6 +1,6 @@
 {
   "name": "flatpickr_plus",
-  "version": "1.0.10",
+  "version": "1.0.13",
   "description": "A lightweight, powerful javascript datetime picker with additional locale year support and year dropdown",
   "scripts": {
     "build": "run-s build:pre build:build build:esm build:types build:post",
@@ -8,7 +8,7 @@
     "build:build": "ts-node --transpile-only build.ts",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:types": "tsc -p tsconfig.declarations.json",
-    "build:post": "copy src/typings.d.ts dist/typings.d.ts",
+    "build:post": "copy src\\typings.d.ts dist\\typings.d.ts",
     "fmt": "prettier --ignore-path .gitignore --trailing-comma es5 --write \"**/*.ts\"",
     "fmt:check": "prettier --ignore-path .gitignore --trailing-comma es5 --check \"**/*.ts\"",
     "start": "npm run build:build -- --dev",
@@ -18,7 +18,7 @@
     "coveralls": "npm run test:unit -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
+    "@babel/core": "^7.12.11",
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/plugin-proposal-optional-catch-binding": "^7.12.1",
     "@babel/preset-env": "^7.12.11",

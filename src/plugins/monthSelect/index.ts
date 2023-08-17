@@ -59,9 +59,11 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
       fp.rContainer.appendChild(self.monthsContainer);
 
-      fp.calendarContainer.classList.add(
-        `flatpickr-monthSelect-theme-${config.theme}`
-      );
+      //?remove cause we will using master flatpickr style to control the theme
+      //?btw we still need to override some of the theme for the monthSelect then we need to using style.css too
+      // fp.calendarContainer.classList.add(
+      //   `flatpickr-monthSelect-theme-${config.theme}`
+      // );
     }
 
     function buildMonths() {

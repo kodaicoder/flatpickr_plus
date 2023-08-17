@@ -561,7 +561,17 @@ span.flatpickr-weekday
 
   &.flatpickr-disabled, &.flatpickr-disabled:hover
     cursor not-allowed
-    color alpha($dayForeground, 0.1)
+    color alpha($dayForeground, 0.3)
+
+    &:before
+      content ''
+      left 50%
+      transform translateX(-50%)
+      top 50%
+      position absolute
+      width  30%
+      text-decoration line-through
+      border-top 0.5px solid alpha($dayForeground, 0.5)
 
   &.week.selected
     border-radius 0

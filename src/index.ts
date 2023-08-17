@@ -521,7 +521,7 @@ function FlatpickrInstance(
         self.currentYear = jumpTo.getFullYear();
         self.currentMonth = jumpTo.getMonth();
       }
-    } catch (ex:any) {
+    } catch (ex: any) {
       /* istanbul ignore next */
       ex.message = "Invalid date supplied: " + jumpTo;
       self.config.errorHandler(ex);
@@ -2466,11 +2466,11 @@ function FlatpickrInstance(
     format?: string
   ) {
     let dates: (Date | undefined)[] = [];
-    if (inputDate instanceof Array)
+    if (inputDate instanceof Array) {
       dates = inputDate.map((d) => self.parseDate(d, format));
-    else if (inputDate instanceof Date || typeof inputDate === "number")
+    } else if (inputDate instanceof Date || typeof inputDate === "number") {
       dates = [self.parseDate(inputDate, format)];
-    else if (typeof inputDate === "string") {
+    } else if (typeof inputDate === "string") {
       switch (self.config.mode) {
         case "single":
         case "time":
@@ -2493,10 +2493,11 @@ function FlatpickrInstance(
         default:
           break;
       }
-    } else
+    } else {
       self.config.errorHandler(
         new Error(`Invalid date supplied: ${JSON.stringify(inputDate)}`)
       );
+    }
 
     self.selectedDates = (self.config.allowInvalidPreload
       ? dates
