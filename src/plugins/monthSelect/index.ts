@@ -167,12 +167,14 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       }
 
       const targetMonth = fp.selectedDates[0].getMonth();
-      const month = fp.rContainer.querySelector(
+      const month: ElementDate | null = fp.rContainer.querySelector(
         `.flatpickr-day:nth-child(${targetMonth + 1})`
       );
 
       if (month) {
-        month.classList.add("selected");
+        if (month.dateObj.getFullYear() === +fp.yearSelect!.value) {
+          month.classList.add("selected");
+        }
       }
     }
 
