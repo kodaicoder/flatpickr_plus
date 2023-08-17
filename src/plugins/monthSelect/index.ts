@@ -50,7 +50,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
       self.monthsContainer = fp._createElement<HTMLDivElement>(
         "div",
-        "flatpickr-days"
+        "flatpickr-monthSelect-months"
       );
 
       self.monthsContainer.tabIndex = -1;
@@ -237,11 +237,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
     }
 
     function setMonth(date: Date) {
-      const selectedDate = new Date(
-        fp.currentYear,
-        date.getMonth(),
-        date.getDate()
-      );
+      const selectedDate = new Date(fp.currentYear, date.getMonth(), 2);
       let selectedDates: Date[] = [];
 
       switch (fp.config.mode) {
@@ -360,9 +356,16 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         bindEvents,
         setCurrentlySelected,
         () => {
-          fp.config.onOpen.push(closeHook);
+          //fp.config.onOpen.push(closeHook);
           fp.config.onClose.push(closeHook);
           fp.loadedPlugins.push("monthSelect");
+        },
+      ],
+      onOpen: [
+        () => {
+          selectYear();
+          buildMonths();
+          setCurrentlySelected();
         },
       ],
       onDestroy: [

@@ -3,6 +3,22 @@
   flex-wrap: wrap;
 }
 
+.flatpickr-monthSelect-months .flatpickr-day {
+  width: 31.35%;
+  -webkit-flex-basis: 31.35%;
+  -ms-flex-preferred-size: 31.35%;
+  flex-basis: 31.35%;
+  max-width: 100%;
+  height: auto;
+  line-height: 45px;
+  margin: 3px;
+}
+
+.flatpickr-monthSelect-months .flatpickr-day:hover,
+.flatpickr-monthSelect-months .flatpickr-day.selected {
+  border-radius: 10px;
+}
+
 .flatpickr-monthSelect-month {
   background: none;
   border: 1px solid transparent;

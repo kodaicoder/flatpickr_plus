@@ -57,28 +57,6 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
       }
 
       self.yearSelect.value = initialYear.toString();
-
-      fp._bind(self.yearSelect, "change", (e) => {
-        let year;
-        const target = e.target as HTMLSelectElement;
-        const selectedYear = target["value"];
-        fp.currentYearElement.value = selectedYear;
-
-        if (fp.config.useLocaleYear) {
-          year = parseInt(selectedYear) - fp.l10n.localeYearAdjustment;
-          fp.currentYear = year;
-        } else {
-          year = parseInt(selectedYear);
-          fp.currentYear = year;
-        }
-        fp.changeYear(+year);
-        fp.redraw();
-      });
-
-      fp._bind(self.yearSelect, "reset", () => {
-        self.yearSelect!.value = fp.currentYearElement.value;
-        fp.redraw();
-      });
     };
 
     const createSelectContainer = () => {
@@ -99,16 +77,52 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
       fp.yearSelectContainer = self.yearSelectContainer;
     };
 
+    const bindEvents = () => {
+      if (self.yearSelect !== null) {
+        fp._bind(self.yearSelect, "change", onYearSelected);
+
+        fp._bind(self.yearSelect, "reset", onReset);
+      }
+    };
+
+    const onYearSelected = (e: Event) => {
+      let year;
+      const target = e.target as HTMLSelectElement;
+      const selectedYear = target["value"];
+      fp.currentYearElement.value = selectedYear;
+
+      if (fp.config.useLocaleYear) {
+        year = parseInt(selectedYear) - fp.l10n.localeYearAdjustment;
+        fp.currentYear = year;
+      } else {
+        year = parseInt(selectedYear);
+        fp.currentYear = year;
+      }
+      fp.changeYear(+year);
+      fp.redraw();
+    };
+
+    const onReset = () => {
+      self.yearSelect!.value = fp.currentYearElement.value;
+      fp.redraw();
+    };
+
     const hideOldYearInput = () => {
       const flatpickrYearElement = fp.currentYearElement;
       flatpickrYearElement.parentElement!.classList.add("flatpickr-disabled");
     };
 
+    function destroyPluginInstance() {
+      if (self.yearSelect !== null) {
+        self.yearSelect.removeEventListener("change", onYearSelected);
+      }
+    }
     return {
       onReady: [
         setDefaultMinMaxDate,
         hideOldYearInput,
         buildSelect,
+        bindEvents,
         () => {
           const flatpickrYearElement = fp.currentYearElement;
 
@@ -125,6 +139,7 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
         }
         yearSelect.value = year.toString();
       },
+      onDestroy: [destroyPluginInstance],
     };
   };
 }
