@@ -56,7 +56,8 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
         self.yearSelect.appendChild(year);
       }
 
-      self.yearSelect.value = initialYear.toString();
+      self.yearSelect.value =
+        initialYear > end ? end.toString() : initialYear.toString();
     };
 
     const createSelectContainer = () => {
