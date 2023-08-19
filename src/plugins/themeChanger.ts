@@ -1,12 +1,10 @@
-const themeChanger = function themeController(
+const themeChanger = async function themeController(
   themeName: string,
   pathToThemeFolder: string
 ) {
   const name = themeName.toLowerCase();
   const linkElement = document.createElement("link");
-  const links = document.querySelectorAll(
-    'link[href*="flatpickr_plus/dist/themes/"]'
-  );
+  const links = document.querySelectorAll(`link[href*="${pathToThemeFolder}"]`);
   if (links.length > 0) {
     links.forEach((link) => link.remove());
   }
