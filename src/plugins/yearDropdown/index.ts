@@ -11,13 +11,19 @@ const defaultConfig: Config = {
 
 function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
   const config = { ...defaultConfig, ...pluginConfig };
-  const initialYear = config.selectYear;
+  let initialYear = config.selectYear;
 
   return (fp: Instance) => {
     const self = {
       yearSelectContainer: null as null | HTMLDivElement,
       yearSelect: null as null | HTMLSelectElement,
     };
+
+    const hideOldYearInput = () => {
+      const flatpickrYearElement = fp.currentYearElement;
+      flatpickrYearElement.parentElement!.classList.add("flatpickr-disabled");
+    };
+
     const setDefaultMinMaxDate = () => {
       //set min date to last day of current year - 150
       if (!fp.config.minDate) {
@@ -72,6 +78,9 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
     };
 
     const buildSelect = () => {
+      initialYear = fp.latestSelectedDateObj
+        ? fp.latestSelectedDateObj.getFullYear()
+        : initialYear;
       createSelectElement(initialYear);
       createSelectContainer();
       fp.yearSelect = self.yearSelect;
@@ -81,11 +90,11 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
     const bindEvents = () => {
       if (self.yearSelect !== null) {
         fp._bind(self.yearSelect, "change", onYearSelected);
-
         fp._bind(self.yearSelect, "reset", onReset);
       }
     };
 
+    //Events
     const onYearSelected = (e: Event) => {
       let year;
       const target = e.target as HTMLSelectElement;
@@ -106,11 +115,6 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
     const onReset = () => {
       self.yearSelect!.value = fp.currentYearElement.value;
       fp.redraw();
-    };
-
-    const hideOldYearInput = () => {
-      const flatpickrYearElement = fp.currentYearElement;
-      flatpickrYearElement.parentElement!.classList.add("flatpickr-disabled");
     };
 
     function destroyPluginInstance() {
