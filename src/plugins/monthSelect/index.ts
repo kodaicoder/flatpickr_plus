@@ -172,7 +172,11 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       );
 
       if (month) {
-        if (month.dateObj.getTime() === fp.selectedDates[0].getTime()) {
+        const isSameDate =
+          month.dateObj.getFullYear() === fp.selectedDates[0].getFullYear() &&
+          month.dateObj.getMonth() === fp.selectedDates[0].getMonth() &&
+          month.dateObj.getDate() === fp.selectedDates[0].getDate();
+        if (isSameDate) {
           month.classList.add("selected");
         }
       }
