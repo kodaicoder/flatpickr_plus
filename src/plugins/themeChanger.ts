@@ -11,7 +11,7 @@ const themeChanger = function themeController(
     links.forEach((link) => link.remove());
   }
   linkElement.rel = "stylesheet";
-  linkElement.href = pathToThemeFolder + name;
+  linkElement.href = pathToThemeFolder + name + ".css";
   document.head.appendChild(linkElement);
 };
 
