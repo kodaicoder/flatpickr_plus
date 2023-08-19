@@ -360,6 +360,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         fp.config.enableTime = false;
       },
       onValueUpdate: setCurrentlySelected,
+      onChange: setCurrentlySelected,
       onKeyDown,
       onReady: [
         stubCurrentMonth,
