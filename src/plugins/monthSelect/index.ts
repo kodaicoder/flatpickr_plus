@@ -156,7 +156,15 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
     function setCurrentlySelected() {
       if (!fp.rContainer) return;
-      if (!fp.selectedDates.length) return;
+      if (!fp.selectedDates.length) {
+        const selectedMonth: ElementDate | null = fp.rContainer.querySelector(
+          `.flatpickr-day.selected`
+        );
+        if (selectedMonth) {
+          selectedMonth.classList.remove("selected");
+        }
+        return;
+      }
 
       const currentlySelected = fp.rContainer.querySelectorAll(
         ".flatpickr-day.selected"
@@ -368,7 +376,6 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         bindEvents,
         setCurrentlySelected,
         () => {
-          fp.config.onChange.push(setCurrentlySelected);
           fp.config.onClose.push(closeHook);
           fp.loadedPlugins.push("monthSelect");
         },
