@@ -94,6 +94,15 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
       }
     };
 
+    const changeYear = () => {
+      const yearSelect = fp.yearSelect!;
+      let year = fp.currentYear;
+      if (fp.config.useLocaleYear) {
+        year += fp.l10n.localeYearAdjustment;
+      }
+      yearSelect.value = year.toString();
+    };
+
     //Events
     const onYearSelected = (e: Event) => {
       let year;
@@ -136,14 +145,7 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
           );
         },
       ],
-      onYearChange: function onYearChange() {
-        const yearSelect = fp.yearSelect!;
-        let year = fp.currentYear;
-        if (fp.config.useLocaleYear) {
-          year += fp.l10n.localeYearAdjustment;
-        }
-        yearSelect.value = year.toString();
-      },
+      onChange: changeYear,
       onDestroy: [destroyPluginInstance],
     };
   };
