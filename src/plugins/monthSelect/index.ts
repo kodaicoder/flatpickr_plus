@@ -368,7 +368,6 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         fp.config.enableTime = false;
       },
       onValueUpdate: setCurrentlySelected,
-      onChange: setCurrentlySelected,
       onKeyDown,
       onReady: [
         stubCurrentMonth,
@@ -381,7 +380,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
           fp.loadedPlugins.push("monthSelect");
         },
       ],
-      onOpen: [
+      onChange: [
         () => {
           selectYear();
           buildMonths();
