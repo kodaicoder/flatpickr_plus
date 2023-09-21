@@ -1346,6 +1346,9 @@ function FlatpickrInstance(
     if (toInitial === true) {
       self.currentYear = self._initialDate.getFullYear();
       self.currentMonth = self._initialDate.getMonth();
+
+      if (self.config.defaultDate && self.config.resetToDefault)
+        self.setDate(self.config.defaultDate, false);
     }
 
     if (self.config.enableTime === true) {
