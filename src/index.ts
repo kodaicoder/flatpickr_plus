@@ -1343,7 +1343,7 @@ function FlatpickrInstance(
 
     self.selectedDates = [];
     self.latestSelectedDateObj = undefined;
-    if (toInitial === true && self.config.resetMoveDefault) {
+    if (toInitial && self.config.resetMoveDefault) {
       self.currentYear = self._initialDate.getFullYear();
       self.currentMonth = self._initialDate.getMonth();
     }
