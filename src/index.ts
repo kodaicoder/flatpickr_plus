@@ -1334,7 +1334,7 @@ function FlatpickrInstance(
     updateNavigationCurrentMonth();
   }
 
-  function clear(triggerChangeEvent = true, toInitial = true) {
+  function clear(toInitial = true, triggerChangeEvent = true) {
     self.input.value = "";
 
     if (self.altInput !== undefined) self.altInput.value = "";
@@ -2515,7 +2515,7 @@ function FlatpickrInstance(
     format = self.config.dateFormat
   ) {
     if ((date !== 0 && !date) || (date instanceof Array && date.length === 0))
-      return self.clear(triggerChange);
+      return self.clear(undefined, triggerChange);
 
     setSelectedDate(date, format);
 
@@ -2527,7 +2527,7 @@ function FlatpickrInstance(
 
     setHoursFromDate();
     if (self.selectedDates.length === 0) {
-      self.clear(false);
+      self.clear(undefined, false);
     }
     updateValue(triggerChange);
 
