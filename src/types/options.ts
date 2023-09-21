@@ -343,6 +343,7 @@ export interface ParsedOptions {
   weekNumbers: boolean;
   wrap: boolean;
   useLocaleYear: boolean;
+  resetMoveDefault: boolean;
   resetToDefault: boolean;
 }
 
@@ -427,5 +428,6 @@ export const defaults: ParsedOptions = {
   weekNumbers: false,
   wrap: false,
   useLocaleYear: false,
+  resetMoveDefault: true,
   resetToDefault: true,
 };
