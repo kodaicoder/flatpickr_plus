@@ -15,8 +15,9 @@ export function createElement<T extends HTMLElement>(
   const e = window.document.createElement(tag) as T;
   className = className || "";
   content = content || "";
-
-  e.className = className;
+  if (className) {
+    e.className = className;
+  }
 
   if (content !== undefined) e.textContent = content;
 
