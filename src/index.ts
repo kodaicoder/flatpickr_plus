@@ -2136,8 +2136,15 @@ function FlatpickrInstance(
     }
 
     if (!userConfig.altInputClass) {
-      self.config.altInputClass =
-        getInputElem().className + " " + self.config.altInputClass;
+      let className = "";
+
+      className += getInputElem().className;
+
+      if (self.config.altInputClass) {
+        className += " " + self.config.altInputClass;
+      }
+
+      self.config.altInputClass = className;
     }
 
     triggerEvent("onParseConfig");
