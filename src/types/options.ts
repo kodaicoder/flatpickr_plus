@@ -269,6 +269,12 @@ Use it along with "enableTime" to create a time picker. */
 
   /* Handling year as locale year.*/
   useLocaleYear: boolean;
+
+  /* Handling reset and move to calendar to default date.*/
+  resetMoveDefault: boolean;
+
+  /* Handling reset and selected a default date.*/
+  resetToDefault: boolean;
 }
 
 export type Options = Partial<BaseOptions>;
