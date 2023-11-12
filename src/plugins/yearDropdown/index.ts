@@ -145,6 +145,7 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
           );
         },
       ],
+      onYearChange: changeYear,
       onChange: changeYear,
       onDestroy: [destroyPluginInstance],
     };
