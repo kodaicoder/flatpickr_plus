@@ -178,13 +178,14 @@
     flex 1
 
   .flatpickr-prev-month, .flatpickr-next-month
+    display flex
     user-select none
     text-decoration none
     cursor pointer
     position absolute
     top 0
     height fit-content
-    margin-top 0.3rem
+    margin-top 5px
     padding 10px
     z-index 3
     color $monthForeground
@@ -397,12 +398,13 @@
     -moz-appearance: menulist
     appearance: menulist
     width: auto
+    box-shadow: none
 
     &:focus, &:active
       outline: none
 
     &:hover
-      background: alpha($invertedBg, 0.05)
+      background: alpha($invertedBg, 0.1)
 
     .flatpickr-monthDropdown-month
       background-color: $monthBackground
