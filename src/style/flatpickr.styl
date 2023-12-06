@@ -718,8 +718,11 @@ span.flatpickr-weekday
     &:hover, &:focus
       background lighten($dayHoverBackground, 3)
 
-.flatpickr-input[readonly]
+.flatpickr-input[readonly], .flatpickr-input[readonly] + input
   cursor pointer
 
-.flatpickr-input:disabled
+.flatpickr-input:disabled, .flatpickr-input:disabled + input
   cursor not-allowed
+
+
+
