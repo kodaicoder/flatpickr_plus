@@ -527,14 +527,14 @@ function FlatpickrInstance(
       self.config.errorHandler(ex);
     }
 
-    if (triggerChange && self.currentYear !== oldYear) {
+    if (triggerChange && self.currentYear !== oldYear && !self.config.noCalendar) {
       triggerEvent("onYearChange");
       buildMonthSwitch();
     }
 
     if (
       triggerChange &&
-      (self.currentYear !== oldYear || self.currentMonth !== oldMonth)
+      (self.currentYear !== oldYear || self.currentMonth !== oldMonth && !self.config.noCalendar)
     ) {
       triggerEvent("onMonthChange");
     }
@@ -965,6 +965,8 @@ function FlatpickrInstance(
       );
     };
 
+    if (self.config.noCalendar) return
+    
     self.monthsDropdownContainer.tabIndex = -1;
 
     self.monthsDropdownContainer.innerHTML = "";
