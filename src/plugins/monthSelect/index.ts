@@ -163,12 +163,12 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         if (selectedMonth) {
           selectedMonth.classList.remove("selected");
         }
-        const todayMonth: ElementDate | null = fp.rContainer.querySelector(
-          `.flatpickr-day.today`
-        );
-        if (todayMonth) {
-          todayMonth.classList.add("selected");
-        }
+        // const todayMonth: ElementDate | null = fp.rContainer.querySelector(
+        //   `.flatpickr-day.today`
+        // );
+        // if (todayMonth) {
+        //   todayMonth.classList.add("selected");
+        // }
         return;
       }
 
@@ -188,9 +188,9 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
         if (month) {
           const isSameDate =
-            month.dateObj.getFullYear() === fp.selectedDates[0].getFullYear() &&
-            month.dateObj.getMonth() === fp.selectedDates[0].getMonth() &&
-            month.dateObj.getDate() === fp.selectedDates[0].getDate();
+            month.dateObj.getFullYear() === fp.selectedDates[i].getFullYear() &&
+            month.dateObj.getMonth() === fp.selectedDates[i].getMonth() &&
+            month.dateObj.getDate() === fp.selectedDates[i].getDate();
           if (isSameDate) {
             month.classList.add("selected");
           }
@@ -292,16 +292,16 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       setCurrentlySelected();
     }
 
-    const shifts: Record<number, number> = {
-      37: -1,
-      39: 1,
-      40: 3,
-      38: -3,
+    const shifts: Record<string, number> = {
+      ArrowLeft: -1,
+      ArrowRight: 1,
+      ArrowDown: 3,
+      ArrowUp: -3,
     };
 
     function onKeyDown(_: any, __: any, ___: any, e: KeyboardEvent) {
-      const shouldMove = shifts[e.keyCode] !== undefined;
-      if (!shouldMove && e.keyCode !== 13) {
+      const shouldMove = shifts[e.key] !== undefined;
+      if (!shouldMove && e.key !== "Enter") {
         return;
       }
 
@@ -325,10 +325,10 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
       if (shouldMove) {
         (self.monthsContainer.children[
-          (12 + index + shifts[e.keyCode]) % 12
+          (12 + index + shifts[e.key]) % 12
         ] as HTMLElement).focus();
       } else if (
-        e.keyCode === 13 &&
+        e.key === "Enter" &&
         self.monthsContainer.contains(document.activeElement)
       ) {
         setMonth((document.activeElement as MonthElement).dateObj);
@@ -339,7 +339,10 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       if (fp.config?.mode === "range" && fp.selectedDates.length === 1)
         fp.clear(false);
 
-      if (fp.config?.mode === "single" && fp.selectedDates.length === 0)
+      if (
+        (fp.config?.mode === "single" || fp.config?.mode === "multiple") &&
+        fp.selectedDates.length === 0
+      )
         fp.clear(false);
 
       if (!fp.selectedDates.length) buildMonths();
@@ -386,7 +389,6 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         () => {
           fp.config.onClose.push(closeHook);
           fp.loadedPlugins.push("monthSelect");
-          setCurrentlySelected();
         },
       ],
       onChange: [
