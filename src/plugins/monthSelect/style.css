@@ -16,7 +16,7 @@
 
 .flatpickr-monthSelect-months .flatpickr-day:hover,
 .flatpickr-monthSelect-months .flatpickr-day.selected {
-  border-radius: 10px;
+  border-radius: 50px;
 }
 
 .flatpickr-monthSelect-months .flatpickr-day.flatpickr-disabled:before {
@@ -122,7 +122,7 @@
 }
 
 .flatpickr-monthSelect-month.startRange {
-  border-radius: 50px 0 0 50px;
+  border-radius: 50px 0 0 50px !important;
 }
 
 .flatpickr-monthSelect-month.endRange {

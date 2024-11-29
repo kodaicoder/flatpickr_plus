@@ -180,18 +180,20 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         currentlySelected[index].classList.remove("selected");
       }
 
-      const targetMonth = fp.selectedDates[0].getMonth();
-      const month: ElementDate | null = fp.rContainer.querySelector(
-        `.flatpickr-day:nth-child(${targetMonth + 1})`
-      );
+      for (let i = 0; i < fp.selectedDates.length; i++) {
+        const targetMonth = fp.selectedDates[i].getMonth();
+        const month: ElementDate | null = fp.rContainer.querySelector(
+          `.flatpickr-day:nth-child(${targetMonth + 1})`
+        );
 
-      if (month) {
-        const isSameDate =
-          month.dateObj.getFullYear() === fp.selectedDates[0].getFullYear() &&
-          month.dateObj.getMonth() === fp.selectedDates[0].getMonth() &&
-          month.dateObj.getDate() === fp.selectedDates[0].getDate();
-        if (isSameDate) {
-          month.classList.add("selected");
+        if (month) {
+          const isSameDate =
+            month.dateObj.getFullYear() === fp.selectedDates[0].getFullYear() &&
+            month.dateObj.getMonth() === fp.selectedDates[0].getMonth() &&
+            month.dateObj.getDate() === fp.selectedDates[0].getDate();
+          if (isSameDate) {
+            month.classList.add("selected");
+          }
         }
       }
     }
@@ -384,6 +386,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         () => {
           fp.config.onClose.push(closeHook);
           fp.loadedPlugins.push("monthSelect");
+          setCurrentlySelected();
         },
       ],
       onChange: [
