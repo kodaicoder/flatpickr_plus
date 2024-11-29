@@ -163,6 +163,12 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         if (selectedMonth) {
           selectedMonth.classList.remove("selected");
         }
+        const todayMonth: ElementDate | null = fp.rContainer.querySelector(
+          `.flatpickr-day.today`
+        );
+        if (todayMonth) {
+          todayMonth.classList.add("selected");
+        }
         return;
       }
 
@@ -258,7 +264,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         date.getMonth(),
         date.getDate()
       );
-      let selectedDates: Date[] = [];
+      let selectedDates: Date[] = [...fp.selectedDates];
 
       switch (fp.config.mode) {
         case "single":
