@@ -6,7 +6,7 @@ export interface Config {
 }
 
 const defaultConfig: Config = {
-  selectYear: new Date().getFullYear(),
+  selectYear: new Date().getFullYear(), //default to next year
 };
 
 function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {

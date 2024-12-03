@@ -532,11 +532,11 @@ span.flatpickr-weekday
       border-color $selectedDayBackground
 
     &.startRange
-      border-radius 50px 0 0 50px
+      border-radius 50px 0 0 50px !important
       //box-shadow:  (2.5*$dayMargin) 0 0 $selectedDayBackground
 
     &.endRange
-      border-radius 0 50px 50px 0
+      border-radius 0 50px 50px 0 !important
 
     // Avoid adding extra fill because it overflows in multimonth mode
     &.startRange + .endRange:not(:nth-child(7n+1))

@@ -527,14 +527,19 @@ function FlatpickrInstance(
       self.config.errorHandler(ex);
     }
 
-    if (triggerChange && self.currentYear !== oldYear && !self.config.noCalendar) {
+    if (
+      triggerChange &&
+      self.currentYear !== oldYear &&
+      !self.config.noCalendar
+    ) {
       triggerEvent("onYearChange");
       buildMonthSwitch();
     }
 
     if (
       triggerChange &&
-      (self.currentYear !== oldYear || self.currentMonth !== oldMonth && !self.config.noCalendar)
+      (self.currentYear !== oldYear ||
+        (self.currentMonth !== oldMonth && !self.config.noCalendar))
     ) {
       triggerEvent("onMonthChange");
     }
@@ -965,8 +970,8 @@ function FlatpickrInstance(
       );
     };
 
-    if (self.config.noCalendar) return
-    
+    if (self.config.noCalendar) return;
+
     self.monthsDropdownContainer.tabIndex = -1;
 
     self.monthsDropdownContainer.innerHTML = "";
@@ -2227,9 +2232,10 @@ function FlatpickrInstance(
           inputBounds.top > calendarHeight);
 
     const top =
-      window.pageYOffset +
+      window.scrollY +
       inputBounds.top +
-      (!showOnTop ? positionElement.offsetHeight + 2 : -calendarHeight - 2);
+      (!showOnTop ? positionElement.offsetHeight + 2 : -calendarHeight - 2) -
+      2;
 
     toggleClass(self.calendarContainer, "arrowTop", !showOnTop);
     toggleClass(self.calendarContainer, "arrowBottom", showOnTop);
@@ -2752,9 +2758,20 @@ function FlatpickrInstance(
 
     const hooks = self.config[event];
 
-    if (hooks !== undefined && hooks.length > 0) {
-      for (let i = 0; hooks[i] && i < hooks.length; i++)
+    // if (hooks !== undefined && hooks.length > 0) {
+    if (hooks !== undefined) {
+      for (let i = 0; hooks[i] && i < hooks.length; i++) {
+        self.input.dispatchEvent(
+          new CustomEvent(removeOn(event), {
+            detail: {
+              selectedDates: self.selectedDates,
+              dateStr: self.input.value,
+              instance: self,
+            },
+          })
+        );
         hooks[i](self.selectedDates, self.input.value, self, data);
+      }
     }
 
     if (event === "onChange") {
@@ -2766,11 +2783,11 @@ function FlatpickrInstance(
   }
 
   function createEvent(name: string): Event {
-    const e = document.createEvent("Event");
-    e.initEvent(name, true, true);
-    return e;
+    return new Event(name, { bubbles: true, cancelable: true });
   }
-
+  function removeOn(event: string) {
+    return event.charAt(2).toLowerCase() + event.substring(3).toLowerCase();
+  }
   function isDateSelected(date: Date) {
     for (let i = 0; i < self.selectedDates.length; i++) {
       const selectedDate = self.selectedDates[i];
@@ -2873,7 +2890,7 @@ function FlatpickrInstance(
     if (self.altInput !== undefined) {
       self.altInput.value = getDateStr(self.config.altFormat);
     }
-
+    // triggerEvent("onValueUpdate");
     if (triggerChange !== false) triggerEvent("onValueUpdate");
   }
 
