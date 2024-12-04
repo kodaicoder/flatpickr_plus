@@ -2758,8 +2758,7 @@ function FlatpickrInstance(
 
     const hooks = self.config[event];
 
-    // if (hooks !== undefined && hooks.length > 0) {
-    if (hooks !== undefined) {
+    if (hooks !== undefined && hooks.length > 0) {
       for (let i = 0; hooks[i] && i < hooks.length; i++) {
         self.input.dispatchEvent(
           new CustomEvent(removeOn(event), {
@@ -2772,6 +2771,18 @@ function FlatpickrInstance(
         );
         hooks[i](self.selectedDates, self.input.value, self, data);
       }
+    }
+
+    if (event === "onValueUpdate" && hooks.length == 0) {
+      self.input.dispatchEvent(
+        new CustomEvent(removeOn(event), {
+          detail: {
+            selectedDates: self.selectedDates,
+            dateStr: self.input.value,
+            instance: self,
+          },
+        })
+      );
     }
 
     if (event === "onChange") {
