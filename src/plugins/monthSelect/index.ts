@@ -189,8 +189,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         if (month) {
           const isSameDate =
             month.dateObj.getFullYear() === fp.selectedDates[i].getFullYear() &&
-            month.dateObj.getMonth() === fp.selectedDates[i].getMonth() &&
-            month.dateObj.getDate() === fp.selectedDates[i].getDate();
+            month.dateObj.getMonth() === fp.selectedDates[i].getMonth();
           if (isSameDate) {
             month.classList.add("selected");
           }
@@ -249,7 +248,38 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       if (eventTarget.classList.contains("flatpickr-disabled")) return;
       if (eventTarget.classList.contains("notAllowed")) return; // necessary??
 
-      setMonth((eventTarget as MonthElement).dateObj);
+      const selectDateObj = (eventTarget as MonthElement).dateObj;
+      if (fp.config.mode === "range") {
+        if (fp.selectedDates.length === 2) {
+          fp.clear(false, false);
+        }
+        setMonth(selectDateObj);
+      } else {
+        if (fp.selectedDates.length > 0) {
+          let isContain = false;
+          for (let i = 0; i < fp.selectedDates.length; i++) {
+            if (
+              fp.selectedDates[i].getMonth() == selectDateObj.getMonth() &&
+              fp.selectedDates[i].getFullYear() == selectDateObj.getFullYear()
+            ) {
+              isContain = true;
+              break;
+            }
+          }
+          if (isContain) {
+            let selectedDate = fp.selectedDates.filter(
+              (date) =>
+                date.getMonth() != selectDateObj.getMonth() ||
+                date.getFullYear() != selectDateObj.getFullYear()
+            );
+            fp.setDate(selectedDate, true);
+          } else {
+            setMonth(selectDateObj);
+          }
+        } else {
+          setMonth(selectDateObj);
+        }
+      }
 
       if (fp.config.closeOnSelect) {
         const single = fp.config.mode === "single";
@@ -304,26 +334,29 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       if (!shouldMove && e.key !== "Enter") {
         return;
       }
-
       if (!fp.rContainer || !self.monthsContainer) return;
-
       const currentlySelected = fp.rContainer.querySelector(
         ".flatpickr-day.selected"
       ) as HTMLElement;
-
       let index = Array.prototype.indexOf.call(
         self.monthsContainer.children,
         document.activeElement
       );
-
       if (index === -1) {
         const target =
           currentlySelected || self.monthsContainer.firstElementChild;
         target.focus();
         index = (target as MonthElement).$i;
       }
-
       if (shouldMove) {
+        if (index + shifts[e.key] > 11) {
+          fp.changeYear(fp.currentYear + 1);
+          buildMonths();
+        }
+        if (index + shifts[e.key] < 0) {
+          fp.changeYear(fp.currentYear - 1);
+          buildMonths();
+        }
         (self.monthsContainer.children[
           (12 + index + shifts[e.key]) % 12
         ] as HTMLElement).focus();
@@ -343,7 +376,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         (fp.config?.mode === "single" || fp.config?.mode === "multiple") &&
         fp.selectedDates.length === 0
       )
-        fp.clear(false);
+        fp.clear(false, false);
 
       if (!fp.selectedDates.length) buildMonths();
     }
@@ -374,11 +407,27 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       }
     }
 
+    function onMonthOpen() {
+      let currentlySelected;
+      if (!fp.config.defaultDate) {
+        currentlySelected = fp.rContainer?.querySelector(
+          ".flatpickr-day.today"
+        ) as HTMLElement;
+      } else {
+        currentlySelected = fp.rContainer?.querySelector(
+          ".flatpickr-day.selected"
+        ) as HTMLElement;
+      }
+
+      currentlySelected && currentlySelected.focus();
+    }
+
     return {
       onParseConfig() {
         fp.config.enableTime = false;
       },
       onValueUpdate: setCurrentlySelected,
+      onOpen: [onMonthOpen],
       onKeyDown,
       onReady: [
         stubCurrentMonth,
@@ -387,7 +436,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         bindEvents,
         setCurrentlySelected,
         () => {
-          fp.config.onClose.push(closeHook);
+          // fp.config.onClose.push(closeHook);
           fp.loadedPlugins.push("monthSelect");
         },
       ],
@@ -395,7 +444,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         () => {
           selectYear();
           buildMonths();
-          setCurrentlySelected();
+          // setCurrentlySelected();
         },
       ],
       onDestroy: [
