@@ -108,8 +108,9 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
     const onYearSelected = (e: Event) => {
       let year;
       const target = e.target as HTMLSelectElement;
-      const selectedYear = target["value"];
-      fp.currentYearElement.value = selectedYear;
+      const selectedYear = target.value;
+      fp.changeYear(+selectedYear);
+      // fp.currentYearElement.value = selectedYear;
 
       if (fp.config.useLocaleYear) {
         year = parseInt(selectedYear) - fp.l10n.localeYearAdjustment;
@@ -118,6 +119,7 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
         year = parseInt(selectedYear);
         fp.currentYear = year;
       }
+
       fp.changeYear(+year);
       fp.redraw();
     };
@@ -130,6 +132,7 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
     function destroyPluginInstance() {
       if (self.yearSelect !== null) {
         self.yearSelect.removeEventListener("change", onYearSelected);
+        self.yearSelect.removeEventListener("reset", onReset);
       }
     }
     return {

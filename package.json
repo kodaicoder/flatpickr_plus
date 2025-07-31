@@ -1,6 +1,6 @@
 {
   "name": "flatpickr_plus",
-  "version": "1.1.22",
+  "version": "1.2.0",
   "description": "A lightweight, powerful javascript datetime picker with additional locale year support and year dropdown",
   "scripts": {
     "build": "run-s build:pre build:build build:esm build:types build:post",

@@ -127,8 +127,10 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         e.stopPropagation();
 
         fp.changeYear(fp.currentYear - 1);
-        selectYear();
-        buildMonths();
+        selectYear(false);
+        if (!config.yearPicker) {
+          buildMonths();
+        }
       });
 
       fp._bind(fp.nextMonthNav, "click", (e) => {
@@ -136,8 +138,10 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         e.stopPropagation();
 
         fp.changeYear(fp.currentYear + 1);
-        selectYear();
-        buildMonths();
+        selectYear(false);
+        if (!config.yearPicker) {
+          buildMonths();
+        }
       });
 
       fp._bind(
@@ -150,16 +154,25 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       );
 
       //bind with YearDropdown
-      if (!!fp.yearSelect) {
+      if (fp.yearSelect) {
         fp._bind(fp.yearSelect, "change", () => {
-          selectYear();
-          buildMonths();
+          selectYear(true);
+          if (!config.yearPicker) {
+            buildMonths();
+          }
         });
       }
     }
 
     function setCurrentlySelected() {
       if (!fp.rContainer) return;
+
+      // if (config.yearPicker) {
+      //   const selectedYear = fp.yearSelect?.value || String(fp.currentYear);
+      //   const date = new Date(+selectedYear, 0, 1);
+      //   fp.selectedDates = [date];
+      // }
+
       if (!fp.selectedDates.length) {
         const selectedMonth: ElementDate | null = fp.rContainer.querySelector(
           `.flatpickr-day.selected`
@@ -201,7 +214,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       }
     }
 
-    function selectYear() {
+    function selectYear(closeOnYearSelect: boolean) {
       let selectedDate = fp.selectedDates[0];
       if (selectedDate) {
         selectedDate = new Date(selectedDate);
@@ -240,6 +253,39 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
         });
       }
       setCurrentlySelected();
+
+      if (fp.config.closeOnSelect && config.yearPicker) {
+        const selectedDate = new Date(fp.currentYear, 0, 1);
+        let selectedDates: Date[] = [...fp.selectedDates];
+        switch (fp.config.mode) {
+          case "single":
+            selectedDates = [selectedDate];
+            break;
+
+          case "multiple":
+            if (closeOnYearSelect) selectedDates.push(selectedDate);
+            break;
+
+          case "range":
+            if (closeOnYearSelect) {
+              if (fp.selectedDates.length === 2) {
+                selectedDates = [selectedDate];
+              } else {
+                selectedDates = fp.selectedDates.concat([selectedDate]);
+                selectedDates.sort((a, b) => a.getTime() - b.getTime());
+              }
+            }
+
+            break;
+        }
+        fp.setDate(selectedDates, true);
+
+        const single = fp.config.mode === "single";
+        const range =
+          fp.config.mode === "range" && fp.selectedDates.length === 2;
+
+        if ((single || range) && closeOnYearSelect) fp.close();
+      }
     }
 
     function selectMonth(e: Event) {
@@ -446,7 +492,7 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       ],
       onChange: [
         () => {
-          selectYear();
+          // selectYear();
           buildMonths();
           // setCurrentlySelected();
         },
