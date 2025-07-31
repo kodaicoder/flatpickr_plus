@@ -1,6 +1,6 @@
 {
   "name": "flatpickr_plus",
-  "version": "1.1.20",
+  "version": "1.1.22",
   "description": "A lightweight, powerful javascript datetime picker with additional locale year support and year dropdown",
   "scripts": {
     "build": "run-s build:pre build:build build:esm build:types build:post",
@@ -79,5 +79,5 @@
     "last 2 versions",
     "safari >= 7"
   ],
-  "packageManager": "pnpm@9.14.3+sha512.c0f53ee99477ed969b82b289ad011a5d16bf1623c957e7f29eabe8d0c00b574c29b8c7f54f6c67ee710c73f285c8154d07ce44b46fe2c0eeb476a90441bac371"
+  "packageManager": "pnpm@10.8.1+sha512.c50088ba998c67b8ca8c99df8a5e02fd2ae2e2b29aaf238feaa9e124248d3f48f9fb6db2424949ff901cffbb5e0f0cc1ad6aedb602cd29450751d11c35023677"
 }

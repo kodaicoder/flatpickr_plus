@@ -1,4 +1,4 @@
-const themeChanger = async function themeController(
+export default async function themeChanger(
   themeName: string,
   pathToThemeFolder: string
 ) {
@@ -21,9 +21,7 @@ const themeChanger = async function themeController(
     linkElement.href = pathToThemeFolder + name + ".css";
     document.head.appendChild(linkElement);
   }
-};
-
-export default themeChanger;
+}
 
 export function getCurrentThemeName(pathToThemeFolder: string) {
   const link = document.querySelector(`link[href*="${pathToThemeFolder}"]`);

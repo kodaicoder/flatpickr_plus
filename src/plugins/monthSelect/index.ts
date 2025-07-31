@@ -9,6 +9,7 @@ export interface Config {
   altFormat: string;
   theme: string;
   _stubbedCurrentMonth?: number;
+  yearPicker?: boolean; // to support yearPicker
 }
 
 export interface ElementDate extends Element {
@@ -22,6 +23,7 @@ const defaultConfig: Config = {
   dateFormat: "F Y",
   altFormat: "F Y",
   theme: "light",
+  yearPicker: false, // to support yearPicker
 };
 
 function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
@@ -57,7 +59,9 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
       buildMonths();
 
-      fp.rContainer.appendChild(self.monthsContainer);
+      if (!config.yearPicker) {
+        fp.rContainer.appendChild(self.monthsContainer);
+      }
 
       //?remove cause we will using master flatpickr style to control the theme
       //?btw we still need to override some of the theme for the monthSelect then we need to using style.css too

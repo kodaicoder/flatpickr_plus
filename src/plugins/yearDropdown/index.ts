@@ -43,8 +43,9 @@ function yearDropdownPlugin(pluginConfig?: Partial<Config>): Plugin {
         "select",
         "flatpickr-monthDropdown-months"
       );
-
       self.yearSelect.setAttribute("aria-label", "year selection");
+      self.yearSelect.addEventListener("change", onYearSelected);
+      self.yearSelect.addEventListener("reset", onReset);
 
       if (fp.config.useLocaleYear) {
         start += fp.l10n.localeYearAdjustment;
