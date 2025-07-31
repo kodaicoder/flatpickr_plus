@@ -61,6 +61,8 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
 
       if (!config.yearPicker) {
         fp.rContainer.appendChild(self.monthsContainer);
+      } else {
+        fp.monthNav.classList.add("yearonly");
       }
 
       //?remove cause we will using master flatpickr style to control the theme

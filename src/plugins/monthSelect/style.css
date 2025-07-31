@@ -3,6 +3,10 @@
   flex-wrap: wrap;
 }
 
+.flatpickr-months.yearonly {
+  margin: 6px 0px;
+}
+
 .flatpickr-monthSelect-months .flatpickr-day {
   width: 31.35%;
   -webkit-flex-basis: 31.35%;
